@@ -145,9 +145,9 @@ impl FileReader {
     let reader = Rc::new(self.inner);
     let cloned_reader = reader.clone();
     let cb = wasm_bindgen::closure::Closure::once(move || {
-      cloned_reader.result().map(|r| {
+      let _ = cloned_reader.result().map(|r| {
         let _ = tx.send(r.as_string().unwrap());
-      })
+      });
     });
     let reader = reader.clone();
     let function = cb.as_ref().dyn_ref().unwrap();
